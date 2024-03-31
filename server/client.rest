@@ -1,0 +1,14 @@
+### Get tasks 
+GET http://localhost:3001/
+
+### Add new task 
+POST http://localhost:3001/new HTTP/1.1
+Content-Type: application/json
+
+{
+  "star": "four",
+  "comment": "Good"
+}
+
+
+### Delete task DELETE https://todo-backend-47er.onrender.com/delete/11 HTTP/1.1
