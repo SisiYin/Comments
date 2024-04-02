@@ -1,55 +1,36 @@
-const { response } = require("express");
+//const { response } = require("express");
 
 // app.js
 const BACK_END_URL = 'http://localhost:3001'
 const commentForm = document.getElementById('commentForm');
-const commentsContainer = document.getElementById('comments');
-// const stars = document.getElementsByClassName("stars")[0]
-// const icons = document.getElementsByClassName("fa-star")
-// const vote = 0
-// var score = document.getElementById("score")
-// score.addEventListener("click",(event) => {
-//   vote = 0
-//   for (let i = 0; i < 5; i++) {
-//     icons[i].style.setProperty("--v",0)
-//     if (icons[i] == event.target) {
-//       vote = i
-//       for (let i = 0; j < i; j++) {
-//         icons[j].style.setProperty("--v",100)
-//       }
-//       const ps = event.clientX - icons[1].getBoundingClientRect().left
-//       if (ps / icons[i].offsetWidth < 0.5){
-//         icons[i].style.setProperty("--v",50)
-//         vote += 0.5
-//       } else {
-//         icons[i].style.setProperty("--v",100)
-//         vote++
-//       }
-//     }
-    
-//   }
-//   score.innerText = vote
-// })
+const commentInput= document.getElementById('comment');
 
-commentForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  
-  const username = document.getElementById('username').value;
-  const comment = document.getElementById('comment').value;
 
+commentForm.addEventListener('submit',async function(event) {
   try {
-    await fetch(BACK_END_URL + '/new', {
+    const response = await saveComment(commentInput.value);
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+    comment.value = '';
+    comment.focus();
+})
+
+const saveComment = async (comment) => {
+  try {
+    const response = await fetch(BACK_END_URL + '/newcomment', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON//stringify({ username, comment }),
+      body: JSON.stringify({ comment })
     });
-    return response.json()
+    return response.json();
   } catch (error) {
-    console.error('Error submitting comment:', error);
+    alert("Error saving stars: " + error.message);
   }
-});
+};
 
 // async function loadComments() {
 //   try {
@@ -67,4 +48,4 @@ commentForm.addEventListener('submit', async (event) => {
 //   }
 // }
 
-loadComments();
+//saveComment();
