@@ -49,8 +49,8 @@ app.get("/",(req,res) => {
 app.post("/newcomment",(req,res) => {
   const pool = openDb()
   //const { articleId } = req.params;
-  const { articleId,userId, comment } = req.body; 
-  pool.query('INSERT INTO comments (article_id, user_id, comment) VALUES ($1,$2,$3) returning *', [articleId, userId, comment],
+  const { article_id,reply_id, comment } = req.body; 
+  pool.query('INSERT INTO comments (article_id, reply_id, comment) VALUES ($1,$2,$3) returning *', [article_id, reply_id, comment],
   (error,result) => {
     if (error) {
       res.status(500).json({error: error.message})
