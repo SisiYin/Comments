@@ -1,6 +1,4 @@
-//const { response } = require("express");
 
-// app.js
 window.history.pushState(null, '', '/post/?aid=2');
 const BACK_END_URL = 'http://localhost:3001'
 const commentForm = document.getElementById('commentForm');
@@ -9,18 +7,45 @@ const commentInput= document.getElementById('comment');
 const urlParams = new URLSearchParams(window.location.search);
 const article_id = urlParams.get('aid');
 
+// function addCommentToPage(comment) {
+//   const commentsContainer = document.getElementById('commentsContainer');
+//   const commentElement = document.createElement('div');
+//   commentElement.textContent = comment.comment;
+//   commentsContainer.appendChild(commentElement);
+// }
 
+
+fetch(BACK_END_URL + '/'+ article_id +'/comments')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(comments => {
+    const commentsContainer = document.getElementById('commentsContainer');
+    comments.forEach(comment => {
+      const commentElement = document.createElement('div');
+      commentElement.textContent = comment.comment;
+      commentsContainer.appendChild(commentElement);
+    });
+  })
+  // .catch(error => {
+  //   console.error('There was a problem with the fetch operation:'+ error.massage);
+  // });
 
 commentForm.addEventListener('submit',async function(event) {
   try {
     event.preventDefault()
     const response = await saveComment(commentInput.value);
     console.log(response);
+    commentInput.value = '';
+    commentInput.focus();
+    // addCommentToPage(commentInput.value);
   } catch (error) {
     console.error(error);
   }
-    comment.value = '';
-    comment.focus();
+    
 })
 
 const saveComment = async (comment) => {
