@@ -6,9 +6,9 @@ POST http://localhost:3001/newcomment HTTP/1.1
 Content-Type: application/json
 
 {
-  "article_id": "1",
+  "article_id": "2",
   "reply_id": "1",
-  "comment": "Very good"
+  "comment": "normal"
 }
 
 

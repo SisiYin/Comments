@@ -61,6 +61,20 @@ app.post("/newcomment",(req,res) => {
   })
 })
 
+app.get("/:aid/comments",async(req,res)=>{
+  const pool = openDb()
+  const article_id = req.params.aid;
+
+  try{
+    const result = await pool.query('SELECT * FROM comments WHERE article_id = $1',[article_id]);
+    const comments = result.rows;
+
+    res.status(200).json(comments);
+  } catch (error){
+    res.status(500).json({error: error.message})
+  }
+})
+
 // todoRouter.post("/new", async (req,res) => {
 //   try {
 //     const result = await query('insert into task (description) values ($1) returning *',[req.body.description])
