@@ -1,13 +1,19 @@
 
-window.history.pushState(null, '', '/post/?aid=2');
+window.history.pushState(null, '', '/post/2');
 const BACK_END_URL = 'http://localhost:3001'
 const commentForm = document.getElementById('commentForm');
 const commentInput= document.getElementById('comment');
 const textarea = document.querySelector('textarea')
 const useCount = document.querySelector('span')
+const ul = document.getElementById('list');
 
-const urlParams = new URLSearchParams(window.location.search);
-const article_id = urlParams.get('aid');
+// const urlParams = new URLSearchParams(window.location.search);
+// const article_id = urlParams.get('aid');
+ // 获取当前页面的 URL
+ const url = window.location.href;
+ // 从 URL 中提取文章 ID
+ const article_id = url.substring(url.lastIndexOf('/') + 1);
+
 
 // function addCommentToPage(comment) {
 //   const commentsContainer = document.getElementById('commentsContainer');
@@ -16,10 +22,7 @@ const article_id = urlParams.get('aid');
 //   commentsContainer.appendChild(commentElement);
 // }
 
-
-
-
-fetch(BACK_END_URL + '/'+ article_id +'/comments')
+fetch(BACK_END_URL + '/'+ article_id +'/commentsreply')
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -27,13 +30,39 @@ fetch(BACK_END_URL + '/'+ article_id +'/comments')
     return response.json();
   })
   .then(comments => {
-    const commentsContainer = document.getElementById('commentsContainer');
     comments.forEach(comment => {
-      const commentElement = document.createElement('div');
-      commentElement.textContent = comment.comment;
-      commentsContainer.appendChild(commentElement);
+      const newcomment = document.createElement('li');
+      const content = document.createElement('div');
+      content.textContent = comment.comment;
+      const time = document.createElement('div')
+      time.textContent = comment.created_at;
+      const replyer = document.createElement('div')
+      replyer.textContent = comment.username;
+      
+      newcomment.appendChild(replyer);
+      newcomment.appendChild(time);
+      newcomment.appendChild(content);
+      
+      ul.appendChild(newcomment);
     });
   })
+
+
+// fetch(BACK_END_URL + '/'+ article_id +'/comments')
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(comments => {
+//     const commentsContainer = document.getElementById('commentsContainer');
+//     comments.forEach(comment => {
+//       const commentElement = document.createElement('div');
+//       commentElement.textContent = comment.comment;
+//       commentsContainer.appendChild(commentElement);
+//     });
+//   })
   // .catch(error => {
   //   console.error('There was a problem with the fetch operation:'+ error.massage);
   // });

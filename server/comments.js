@@ -75,6 +75,20 @@ app.get("/:aid/comments",async(req,res)=>{
   }
 })
 
+app.get("/:aid/commentsreply",async(req,res)=>{
+  const pool = openDb()
+  const article_id = req.params.aid;
+
+  try{
+    const result = await pool.query('SELECT comments.comment, comments.article_id,account.username,comments.created_at FROM comments JOIN account ON comments.reply_id = account.account_id where article_id = $1;',[article_id]);
+   // const comments = result.rows;
+ 
+    res.status(200).json(result.rows);
+  } catch (error){
+    res.status(500).json({error: error.message})
+  }
+})
+
 // todoRouter.post("/new", async (req,res) => {
 //   try {
 //     const result = await query('insert into task (description) values ($1) returning *',[req.body.description])
