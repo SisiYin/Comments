@@ -14,8 +14,11 @@
   <div id = "commentsContainer"></div>
 
   <form id="commentForm" >
-    <textarea id="comment" name="comment" placeholder="Write your comment here" required></textarea>
+    <textarea id="comment" name="comment" rows="6" maxlength="800" placeholder="Write your comment here" required></textarea>
     <div>
+      <span class="useCount" id="useCount">0</span>
+      <span>/</span>
+      <span>800</span>
       <button type="submit">Submit</button>
     </div>
   </form>

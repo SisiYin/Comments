@@ -3,6 +3,8 @@ window.history.pushState(null, '', '/post/?aid=2');
 const BACK_END_URL = 'http://localhost:3001'
 const commentForm = document.getElementById('commentForm');
 const commentInput= document.getElementById('comment');
+const textarea = document.querySelector('textarea')
+const useCount = document.querySelector('span')
 
 const urlParams = new URLSearchParams(window.location.search);
 const article_id = urlParams.get('aid');
@@ -13,6 +15,8 @@ const article_id = urlParams.get('aid');
 //   commentElement.textContent = comment.comment;
 //   commentsContainer.appendChild(commentElement);
 // }
+
+
 
 
 fetch(BACK_END_URL + '/'+ article_id +'/comments')
@@ -40,12 +44,17 @@ commentForm.addEventListener('submit',async function(event) {
     const response = await saveComment(commentInput.value);
     console.log(response);
     commentInput.value = '';
+    useCount.innerText = 0;
     commentInput.focus();
     // addCommentToPage(commentInput.value);
   } catch (error) {
     console.error(error);
   }
     
+})
+
+textarea.addEventListener('input',function () {
+  useCount.innerText = textarea.value.length
 })
 
 const saveComment = async (comment) => {

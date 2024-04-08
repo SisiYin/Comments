@@ -35,7 +35,7 @@ const openDb = () => {
   return pool
 }
 
-app.get("/",(req,res) => {
+app.get("/post/",(req,res) => {
   const pool = openDb()
 
   pool.query('select * from comments',(error,result) => {

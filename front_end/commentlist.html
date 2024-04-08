@@ -5,14 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./liststyle.css">
   <title>Comments for article</title>
 </head>
 <body>
   <h1>
     Comments for Article
   </h1>
-  <div id = "CommentsContainer"></div>
+  <div class="w">
+    <div class = "controls">
+      <img src="" alt=""><br />
+      <textarea placeholder="write your comment" id="area" cols="30" rows="10" maxlength="500"></textarea>
+      <div>
+        <span class="useCount" id="useCount">0</span>
+        <span>/</span>
+        <span>500</span>
+        <button id="submit">submit</button>
+      </div>
+    </div>
+  
+    <div class="contentList">
+      <ul id="list">
+  
+      </ul>
+    </div>
+  </div>
+
+
+  <script>
+
+    let dataArr = [
+      {username:'A', imgSrc:'./images/1'},
+      {username:'B', imgSrc:'./images/2'},
+      {username:'C', imgSrc:'./images/3'}
+    ]
+    const button = document.querySelector('button')
+    const ul = document.querySelector('ul')
+    const textarea = document.querySelector('textarea')
+    const useCount = document.querySelector('span')
+    button.addEventListener('click',function(){
+
+      let newLi = document.createElement('li')
+      ul.insertBefore(newLi, ul.children[0])
+
+      let num = Math.floor(Math.random()*dataArr.length)
+      newLi.innerHTML = `
+          <div class='info'>
+            <img src=${dataArr[num].imgSrc} class="userpic">
+            <span class="username">${dataArr[num].username}</span>
+            <p class="send-time">create at</p>
+          </div>
+          <div class="content">${textarea.value}</div>
+          <span class="the_del">X</span>
+      `
+
+      textarea.value = ''
+      useCount.innerText = 0
+
+    })
+    
+    textarea.addEventListener('input',function () {
+      useCount.innerText = textarea.value.length
+    })
+  </script>
+  
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
