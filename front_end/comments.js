@@ -35,7 +35,7 @@ fetch(BACK_END_URL + '/'+ article_id +'/commentsreply')
       const content = document.createElement('div');
       content.textContent = comment.comment;
       const time = document.createElement('div')
-      time.textContent = comment.created_at;
+      time.textContent = 'created at: ' + comment.created_at;
       const replyer = document.createElement('div')
       replyer.textContent = comment.username;
       

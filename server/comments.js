@@ -80,7 +80,7 @@ app.get("/:aid/commentsreply",async(req,res)=>{
   const article_id = req.params.aid;
 
   try{
-    const result = await pool.query('SELECT comments.comment, comments.article_id,account.username,comments.created_at FROM comments JOIN account ON comments.reply_id = account.account_id where article_id = $1;',[article_id]);
+    const result = await pool.query('SELECT c.comment, c.article_id,a.username,c.created_at FROM comments c JOIN account a ON c.reply_id = a.account_id where article_id = $1;',[article_id]);
    // const comments = result.rows;
  
     res.status(200).json(result.rows);
