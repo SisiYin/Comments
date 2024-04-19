@@ -21,6 +21,31 @@ const ul = document.getElementById('list');
 //   commentElement.textContent = comment.comment;
 //   commentsContainer.appendChild(commentElement);
 // }
+function timeSince(timestamp) {
+  const seconds = Math.floor((new Date() - new Date(timestamp)) / 1000);
+  let interval = Math.floor(seconds / 31536000);
+
+  if (interval > 1) {
+      return `${interval} years ago`;
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval > 1) {
+      return `${interval} months ago`;
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval > 1) {
+      return `${interval} days ago`;
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval > 1) {
+      return `${interval} hours ago`;
+  }
+  interval = Math.floor(seconds / 60);
+  if (interval > 1) {
+      return `${interval} minutes ago`;
+  }
+  return `${Math.floor(seconds)} seconds ago`;
+}
 
 fetch(BACK_END_URL + '/'+ article_id +'/commentsreply')
   .then(response => {
@@ -35,7 +60,7 @@ fetch(BACK_END_URL + '/'+ article_id +'/commentsreply')
       const content = document.createElement('div');
       content.textContent = comment.comment;
       const time = document.createElement('div')
-      time.textContent = 'created at: ' + comment.created_at;
+      time.textContent = 'created at: ' + timeSince(comment.created_at);
       const replyer = document.createElement('div')
       replyer.textContent = comment.username;
       

@@ -7,8 +7,8 @@ Content-Type: application/json
 
 {
   "article_id": "2",
-  "reply_id": "3",
-  "comment": "spicy"
+  "reply_id": "1",
+  "comment": "sweet"
 }
 
 
